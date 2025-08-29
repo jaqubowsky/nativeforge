@@ -5,10 +5,9 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo run lint",
-    "test": "turbo run test",
     "format": "biome format --write .",
+    "test": "turbo run test",
     "check-types": "turbo run check-types",
-    "pre-commit": "npm-run-all --parallel check-types lint format test",
     "prepare": "husky"
   },
   "engines": {
@@ -19,9 +18,15 @@
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "husky": "^9.1.7",
+    "lint-staged": "^16.1.5",
     "npm-run-all": "^4.1.5",
     "turbo": "^2.5.4",
     "ultracite": "5.2.9"
+  },
+  "lint-staged": {
+    "*": [
+      "biome check --write --no-errors-on-unmatched"
+    ]
   },
   "packageManager": "pnpm@10.14.0",
   "workspaces": [
