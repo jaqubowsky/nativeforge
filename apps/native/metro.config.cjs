@@ -1,3 +1,5 @@
+"use strict";
+
 // Learn more https://docs.expo.io/guides/customizing-metro
 const { getDefaultConfig } = require("expo/metro-config");
 const { FileStore } = require("metro-cache");
@@ -13,11 +15,10 @@ const config = withTurborepoManagedCache(
   )
 );
 
+config.resolver = config.resolver || {};
 config.resolver.unstable_enablePackageExports = true;
-
 // Enable symlinked packages resolution for pnpm/turborepo monorepos
 config.resolver.unstable_enableSymlinks = true;
-
 config.resolver.disableHierarchicalLookup = true;
 
 module.exports = config;
@@ -31,7 +32,7 @@ module.exports = config;
  * @returns {import('expo/metro-config').MetroConfig}
  */
 function withMonorepoPaths(monorepoConfig) {
-  const projectRoot = import.meta.dirname;
+  const projectRoot = __dirname;
   const workspaceRoot = path.resolve(projectRoot, "../..");
 
   // #1 - Watch all files in the monorepo

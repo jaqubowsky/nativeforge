@@ -1,4 +1,4 @@
-import "../global.css";
+import "@/global.css";
 
 import { ThemeProvider } from "@react-navigation/native";
 import { NAV_THEME } from "@repo/ui/lib";
