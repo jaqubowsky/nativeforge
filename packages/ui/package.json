@@ -1,0 +1,39 @@
+{
+  "name": "@repo/ui",
+  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "version": "0.1.0",
+  "exports": {
+    "./components": {
+      "types": "./src/components/index.ts",
+      "react-native": "./src/components/index.ts",
+      "default": "./src/components/index.ts"
+    },
+    "./lib": {
+      "types": "./src/lib/index.ts",
+      "react-native": "./src/lib/index.ts",
+      "default": "./src/lib/index.ts"
+    }
+  },
+  "license": "MIT",
+  "scripts": {
+    "lint": "biome lint .",
+    "format": "biome lint --write .",
+    "test": "echo 'TODO: add test'",
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@rn-primitives/slot": "^1.2.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.6.0"
+  },
+  "peerDependencies": {
+    "react": "19.0.0",
+    "react-native": "0.79.5",
+    "nativewind": "^4.1.23",
+    "lucide-react-native": "^0.511.0",
+    "@react-navigation/native": "7.0.14"
+  }
+}

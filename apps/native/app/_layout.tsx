@@ -1,70 +1,22 @@
-import { Stack } from "expo-router";
-import {
-	DarkTheme,
-	DefaultTheme,
-	type Theme,
-	ThemeProvider,
-} from "@react-navigation/native";
-import { StatusBar } from "expo-status-bar";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "../global.css";
-import { NAV_THEME } from "@/lib/constants";
-import React, { useRef } from "react";
-import { useColorScheme } from "@/lib/use-color-scheme";
-import { Platform } from "react-native";
-import { setAndroidNavigationBar } from "@/lib/android-navigation-bar";
 
-const LIGHT_THEME: Theme = {
-	...DefaultTheme,
-	colors: NAV_THEME.light,
-};
-const DARK_THEME: Theme = {
-	...DarkTheme,
-	colors: NAV_THEME.dark,
-};
+import { ThemeProvider } from "@react-navigation/native";
+import { NAV_THEME } from "@repo/ui/lib";
+import { PortalHost } from "@rn-primitives/portal";
+import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { useColorScheme } from "nativewind";
 
-export const unstable_settings = {
-	initialRouteName: "(drawer)",
-};
+export { ErrorBoundary } from "expo-router";
 
 export default function RootLayout() {
-	const hasMounted = useRef(false);
-	const { colorScheme, isDarkColorScheme } = useColorScheme();
-	const [isColorSchemeLoaded, setIsColorSchemeLoaded] = React.useState(false);
+  const { colorScheme } = useColorScheme();
 
-	useIsomorphicLayoutEffect(() => {
-		if (hasMounted.current) {
-			return;
-		}
-
-		if (Platform.OS === "web") {
-			document.documentElement.classList.add("bg-background");
-		}
-		setAndroidNavigationBar(colorScheme);
-		setIsColorSchemeLoaded(true);
-		hasMounted.current = true;
-	}, []);
-
-	if (!isColorSchemeLoaded) {
-		return null;
-	}
-	return (
-		<ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-			<StatusBar style={isDarkColorScheme ? "light" : "dark"} />
-			<GestureHandlerRootView style={{ flex: 1 }}>
-				<Stack>
-					<Stack.Screen name="(drawer)" options={{ headerShown: false }} />
-					<Stack.Screen
-						name="modal"
-						options={{ title: "Modal", presentation: "modal" }}
-					/>
-				</Stack>
-			</GestureHandlerRootView>
-		</ThemeProvider>
-	);
+  return (
+    <ThemeProvider value={NAV_THEME[colorScheme ?? "light"]}>
+      <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
+      <Stack />
+      <PortalHost />
+    </ThemeProvider>
+  );
 }
-
-const useIsomorphicLayoutEffect =
-	Platform.OS === "web" && typeof window === "undefined"
-		? React.useEffect
-		: React.useLayoutEffect;
