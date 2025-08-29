@@ -5,7 +5,6 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo run lint",
-    "format": "biome format --write .",
     "test": "turbo run test",
     "check-types": "turbo run check-types",
     "prepare": "husky"
@@ -24,8 +23,8 @@
     "ultracite": "5.2.9"
   },
   "lint-staged": {
-    "*": [
-      "biome check --write --no-errors-on-unmatched"
+    "*.{ts,tsx,js,jsx,mjs,cjs,json,css,md}": [
+      "pnpm exec biome check --write --no-errors-on-unmatched"
     ]
   },
   "packageManager": "pnpm@10.14.0",

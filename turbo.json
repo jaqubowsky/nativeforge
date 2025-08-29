@@ -8,13 +8,15 @@
       "outputs": ["dist/**"]
     },
     "test": {
-      "inputs": ["src/**/*.test.{ts,tsx}", "vitest.config.ts"]
+      "inputs": ["$TURBO_DEFAULT$", "vitest.config.*", "jest.config.*"]
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": ["^lint"],
+      "inputs": ["$TURBO_DEFAULT$", "biome.json"]
     },
     "check-types": {
-      "dependsOn": ["^check-types"]
+      "dependsOn": ["^check-types"],
+      "inputs": ["$TURBO_DEFAULT$", "tsconfig.json", "tsconfig.*.json"]
     },
     "dev": {
       "cache": false,
